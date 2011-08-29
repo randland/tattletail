@@ -118,6 +118,8 @@ module Tattletail
       end
     end
   end
+  alias tell_on tattle_on
+  alias tell_me_about tattle_on
 
   def tattle_on_class_method(*method_names)
     method_names.each do |method_name|
@@ -129,6 +131,10 @@ module Tattletail
     end
   end
   alias tattle_on_class_methods tattle_on_class_method
+  alias tell_on_class_methods tattle_on_class_method
+  alias tell_on_class_method tattle_on_class_method
+  alias tell_me_about_class_methods tattle_on_class_method
+  alias tell_me_about_class_method tattle_on_class_method
 
   def tattle_on_instance_method(*method_names)
     method_names.each do |method_name|
@@ -138,6 +144,10 @@ module Tattletail
     end
   end
   alias tattle_on_instance_methods tattle_on_instance_method
+  alias tell_on_instance_methods tattle_on_instance_method
+  alias tell_on_instance_method tattle_on_instance_method
+  alias tell_me_about_instance_methods tattle_on_instance_method
+  alias tell_me_about_instance_method tattle_on_instance_method
 
 private
 
@@ -226,17 +236,17 @@ class Fib
     return 1 if x <= 2
     find(x - 1) + find(x - 2)
   end
-  tattle_on :find
+  tattle_on_class_method :find
 
   def find x
     x * 2
   end
-  tattle_on_instance_method :find
+  tell_on_instance_method :find
 
   def fib_block &blk
     fib yield
   end
-  tattle_on :fib_block
+  tell_on :fib_block
 end
 
 module Merge
