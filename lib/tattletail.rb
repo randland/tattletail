@@ -7,6 +7,7 @@ module Tattletail
   COLORS = { :count => '00a0b0',
              :file => '444',
              :context => '999',
+             :exception => 'f00',
              :self => '793A57',
              :method => 'fff',
              :args => 'EB6841',
@@ -109,6 +110,10 @@ module Tattletail
                         end
   end
 
+  def self.exception_str exception, indent_str
+    "#{exception.class.name}: #{exception.message.to_s}".color(COLORS[:exception]).bold.underline
+  end
+
   def tattle_on(*method_names)
     method_names.each do |method_name|
       if class_method? method_name
@@ -189,6 +194,7 @@ private
 
         Tattletail.indent
         result = nil
+        begin
           seconds = Benchmark.realtime { result = #{original_method}(*args, &blk) }
           time_str = Tattletail.time_str(seconds)
           result_str = Tattletail.result_str(result, indent_str)
@@ -202,6 +208,14 @@ private
           puts indent_str + "       " + time_str
 
           result
+        rescue Exception => e
+          Tattletail.outdent
+          exception_str = Tattletail.exception_str(e, indent_str)
+          puts cont_indent_str if Tattletail.indent_changed?
+          puts end_indent_str + count_str + self_str + "." + method_str + " ⊢ " + exception_str
+          Tattletail.remember_indent
+          raise e
+        end
       end
     EOF
   end
@@ -212,69 +226,4 @@ Tattletail.reset
 
 class Object
   extend Tattletail
-end
-
-class Fib
-  def no_args
-    5
-  end
-  tattle_on :no_args
-
-  def fib x
-    return 1 if x <= 2
-    fib(x - 1) + fib(x - 2)
-  end
-  tattle_on_instance_method :fib
-
-  def self.fib x
-    return 1 if x <= 2
-    fib(x - 1) + fib(x - 2)
-  end
-  tattle_on :fib
-
-  def self.find x
-    return 1 if x <= 2
-    find(x - 1) + find(x - 2)
-  end
-  tattle_on_class_method :find
-
-  def find x
-    x * 2
-  end
-  tell_on_instance_method :find
-
-  def fib_block &blk
-    fib yield
-  end
-  tell_on :fib_block
-end
-
-module Merge
-  extend Tattletail
-
-  def self.sample_array
-    [3,7,5,1,2,9,8,0,2,3,5,2,4,1,6,7,8,4,6,2,1]
-  end
-
-  def self.mergesort(list = sample_array)
-    return list if list.size <= 1
-    mid = list.size / 2
-    left  = list[0, mid]
-    right = list[mid, list.size]
-    merge(mergesort(left), mergesort(right))
-  end
-  tattle_on :mergesort
-
-  def self.merge(left, right)
-    sorted = []
-    until left.empty? or right.empty?
-      if left.first <= right.first
-        sorted << left.shift
-      else
-        sorted << right.shift
-      end
-    end
-    sorted.concat(left).concat(right)
-  end
-  tattle_on :merge
 end
