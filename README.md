@@ -42,53 +42,53 @@ Once Tattletail is in your environment every object can tattle on its methods, o
 Say we have a class that looks like this:
 
     class Sequences
-      def fibernachi n
+      def fibonacci n
         return 1 if n <= 2
-        fibernachi(n - 1) + fibernachi(n - 2)
+        fibonacci(n - 1) + fibonacci(n - 2)
       end
     end
 
-And we wonder why it gets called so often, so we `tattle on` the fibernachi method.
+And we wonder why it gets called so often, so we `tattle on` the fibonacci method.
 
     class Sequences
-      def fibernachi n
+      def fibonacci n
         return 1 if n <= 2
-        fibernachi(n - 1) + fibernachi(n - 2)
+        fibonacci(n - 1) + fibonacci(n - 2)
       end
-      tattle_on :fibernachi
+      tattle_on :fibonacci
     end
 
 Then we call this method in irb (or better yet [pry][2]):
 
-    pry(main)> Sequences.new.fibernachi 4
+    pry(main)> Sequences.new.fibonacci 4
 
 And Tattletail outputs:
 
-    ─┬─ #1 #<Sequences:0x007fa8eaa79960>.fibernachi(4) called
+    ─┬─ #1 #<Sequences:0x007fa8eaa79960>.fibonacci(4) called
      │         /gems/tattletail-0.0.3/lib/tattletail/demo.rb:18
      │
-     ├──┬─ #2 #<Sequences:0x007fa8eaa79960>.fibernachi(3) called
+     ├──┬─ #2 #<Sequences:0x007fa8eaa79960>.fibonacci(3) called
      │  │         /gems/tattletail-0.0.3/lib/tattletail/demo.rb:18
      │  │
-     │  ├──┬─ #3 #<Sequences:0x007fa8eaa79960>.fibernachi(2) called
+     │  ├──┬─ #3 #<Sequences:0x007fa8eaa79960>.fibonacci(2) called
      │  │  │         /gems/ruby-1.9.2-p290@tattletail/gems/tattletail-0.0.3/lib/tattletail/demo.rb:18
-     │  │  └─ #3 #<Sequences:0x007fa8eaa79960>.fibernachi(2) ⊢ 1
+     │  │  └─ #3 #<Sequences:0x007fa8eaa79960>.fibonacci(2) ⊢ 1
      │  │         0.0000 sec
      │  │
-     │  ├──┬─ #4 #<Sequences:0x007fa8eaa79960>.fibernachi(1) called
+     │  ├──┬─ #4 #<Sequences:0x007fa8eaa79960>.fibonacci(1) called
      │  │  │         /gems/ruby-1.9.2-p290@tattletail/gems/tattletail-0.0.3/lib/tattletail/demo.rb:18
-     │  │  └─ #4 #<Sequences:0x007fa8eaa79960>.fibernachi(1) ⊢ 1
+     │  │  └─ #4 #<Sequences:0x007fa8eaa79960>.fibonacci(1) ⊢ 1
      │  │         0.0001 sec
      │  │
-     │  └─ #2 #<Sequences:0x007fa8eaa79960>.fibernachi(3) ⊢ 2
+     │  └─ #2 #<Sequences:0x007fa8eaa79960>.fibonacci(3) ⊢ 2
      │         0.0017 sec
      │
-     ├──┬─ #5 #<Sequences:0x007fa8eaa79960>.fibernachi(2) called
+     ├──┬─ #5 #<Sequences:0x007fa8eaa79960>.fibonacci(2) called
      │  │         /gems/ruby-1.9.2-p290@tattletail/gems/tattletail-0.0.3/lib/tattletail/demo.rb:18
-     │  └─ #5 #<Sequences:0x007fa8eaa79960>.fibernachi(2) ⊢ 1
+     │  └─ #5 #<Sequences:0x007fa8eaa79960>.fibonacci(2) ⊢ 1
      │         0.0000 sec
      │
-     └─ #1 #<Sequences:0x007fa8eaa79960>.fibernachi(4) ⊢ 3
+     └─ #1 #<Sequences:0x007fa8eaa79960>.fibonacci(4) ⊢ 3
             0.0029 sec
 
 It's as easy as that!
