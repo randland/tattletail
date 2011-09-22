@@ -4,9 +4,9 @@ Tattletail
 Introduction
 -----------
 
-Tattletail is a simple ruby debuging tool that provides Rubiests a way to tattle on methods.
+Tattletail is a simple ruby debugging tool that provides Rubyists a way to tattle on methods.
 
-Simmular to 'poor mans' debugging with `puts` statements, Tattletail outputs whenever the method you tattle on gets called.
+Similar to 'poor mans' debugging with `puts` statements, Tattletail outputs whenever the method you tattle on gets called.
 
 In addition, Tattletail will give you:
 
