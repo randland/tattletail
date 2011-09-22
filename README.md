@@ -1,33 +1,45 @@
 Tattletail
 =============
 
-Tattletail provides Rubiests a way to tattle on methods.
+Introduction
+-----------
 
-All you have to do is install Tattletail, and `tattle on` any method.
+Tattletail is a simple ruby debuging tool that provides Rubiests a way to tattle on methods.
 
-Tattletail will give you:
+Simmular to 'poor mans' debugging with `puts` statements, Tattletail outputs whenever the method you tattle on gets called.
+
+In addition, Tattletail will give you:
 
 *    A call chain tree
 *    The name of the method
 *    The instance id of the method's object
 *    The parameters passed into the method
-*    The location of the ruby file (and line number) from whence the method was called
+*    The location of the Ruby file (and line number) from whence the method was called
 *    A benchmark of the method's execution time
 
 Requirements
 -------
 
-All you need is ruby 1.9.2
+You need Ruby 1.9.2.
 
 Tattletail is a work in progress and has not been known to work on rubies other than 1.9.2.
 
 Installation
 -------
 
+Installing Tattletail is easy:
+
     gem install tattletail
 
 Usage
 -----
+
+Using Tattletail has two steps:
+
+1. Load it into your environment.
+2. `tattle_on` a method.
+
+Load it into your environment with:
 
     require 'tattletail'
 
@@ -35,7 +47,7 @@ Or, place it in your gemfile.
 
     gem 'tattletail'
 
-Once Tattletail is in your environment every object can tattle on its methods, or instance methods.
+`tattle_on` a method by simply adding `tattle_on <method_name>` somewhere in your class.
 
 ### Example:
 
@@ -91,14 +103,12 @@ And Tattletail outputs:
      └─ #1 #<Sequences:0x007fa8eaa79960>.fibonacci(4) ⊢ 3
             0.0029 sec
 
-It's as easy as that!
-
 More Information
 ---------
 
 Issues? Questions? Open an [Issue][1] on github.
 
-If you need more examples, they can be found in [lib/tattletail/demo.rb][3]
+If you need more usage examples, they can be found in [lib/tattletail/demo.rb][3]
 
 Contributing
 ------------
@@ -106,11 +116,11 @@ Contributing
 Want to contribute? Great!
 
 1. Fork it.
-2. Create a branch (`git checkout -b my_feature`)
-3. Commit your changes (`git commit -am "Added Awesomeness"`)
-4. Push to the branch (`git push origin my_feature`)
-5. Create an [Issue][1] with a link to your branch
-6. Enjoy a refreshing Diet Coke and wait
+2. Create a branch (`git checkout -b my_feature`).
+3. Commit your changes (`git commit -am "Added Awesomeness"`).
+4. Push to the branch (`git push origin my_feature`).
+5. Create an [Issue][1] with a link to your branch.
+6. Enjoy a refreshing Diet Coke and wait.
 
 
 [1]: http://github.com/randland/tattletail/issues
