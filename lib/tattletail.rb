@@ -201,7 +201,7 @@ private
           Tattletail.outdent
 
           puts cont_indent_str if Tattletail.indent_changed?
-          puts end_indent_str + count_str + self_str + "." + method_str + " ⊢ " + result_str
+          puts end_indent_str + count_str + self_str + "." + method_str + " => " + result_str
 
           Tattletail.remember_indent
 
@@ -212,7 +212,7 @@ private
           Tattletail.outdent
           exception_str = Tattletail.exception_str(e, indent_str)
           puts cont_indent_str if Tattletail.indent_changed?
-          puts end_indent_str + count_str + self_str + "." + method_str + " ⊢ " + exception_str
+          puts end_indent_str + count_str + self_str + "." + method_str + " => " + exception_str
           Tattletail.remember_indent
           raise e
         end
